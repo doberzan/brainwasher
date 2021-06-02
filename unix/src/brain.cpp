@@ -68,9 +68,10 @@ int main(int argc, char *argv[])
         }
         
 	    hookTerm();
+        cout << "Active Terminals: " << endl;
         for(filesystem::path p : termlist)
         {
-            cout << "Active Terminals: " << endl << p << endl;
+            cout << p << endl;
         }
     }else
     {
