@@ -17,14 +17,21 @@ using namespace std;
 
 int delay = 0;
 int mode = 0;
-vector<string> termlist;
+vector<filesystem::path> termlist;
 
 int hookTerm()
 {
     // Access the available tty, pts, and vty stdout.
     // Update active teminal list and directory listing.
     for (const auto & entry : filesystem::directory_iterator("/dev/pts/"))
-        std::cout << entry.path() << std::endl;
+    {
+        if(entry.path() == (filesystem::path)"/dev/pts/ptmx")
+        {
+            cout << "Debug ptmx is out." << endl;
+            continue;
+        }
+        termlist.push_back(entry.path());
+    }
     return 1;
 }
 
@@ -59,7 +66,12 @@ int main(int argc, char *argv[])
             cout << "      " << "\r";
             delay--;
         }
-	hookTerm();
+        
+	    hookTerm();
+        for(filesystem::path p : termlist)
+        {
+            cout << "Active Terminals: " << endl << p << endl;
+        }
     }else
     {
         cout << "Brainwashing failed - No root." << endl; 
