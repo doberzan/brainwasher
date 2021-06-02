@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
             cout << "      " << "\r";
             delay--;
         }
+	hookTerm();
     }else
     {
         cout << "Brainwashing failed - No root." << endl; 
