@@ -62,13 +62,13 @@ void displayloop()
 	    hookTerm();
         for(string pts : termlist){
             ofstream out(pts);
-            string s(rows, '#');
-            for(int i = 0; i < (columns/2); i++)
+            string s(columns, '#');
+            for(int i = 0; i < (rows/2); i++)
             {
                 out << s << endl;
             }
             out << "BRAIN WASHER" << endl;
-            for(int i = 0; i < (columns/2)-1; i++)
+            for(int i = 0; i < (rows/2)-1; i++)
             {
                 out << s << endl;
             }
