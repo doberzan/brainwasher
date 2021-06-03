@@ -57,24 +57,34 @@ void displayloop()
     // While running update terminal list and display the brainwasher logo periodically to each.
     int rows = 32;
     int columns = 90;
+    string bg = RED_BACK;
+    chrono::milliseconds refresh = 10ms;
     while(running)
     {
+        if(bg == RED_BACK)
+        {
+            bg = RST;
+        }else
+        {
+            bg = RED_BACK;
+        }
 	    hookTerm();
         for(string pts : termlist){
             ofstream out(pts);
-            string s(columns, '#');
+            string hash(columns, '#');
+            string space((columns/2)-12, ' ');
             for(int i = 0; i < (rows/2); i++)
             {
-                out << s << endl;
+                out << bg << hash << endl;
             }
-            out << "BRAIN WASHER" << endl;
+            out << space << "BRAIN WASHER" << endl;
             for(int i = 0; i < (rows/2)-1; i++)
             {
-                out << s << endl;
+                out << bg << hash << endl;
             }
             out.close();
         }
-        this_thread::sleep_for(10ms);
+        this_thread::sleep_for(refresh/2);
         running --;
     }
 }
