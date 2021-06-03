@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <filesystem>
+#include <fstream>
 
 using namespace std;
 
@@ -17,12 +18,23 @@ using namespace std;
 
 int delay = 0;
 int mode = 0;
-vector<filesystem::path> termlist;
+int running = 10;
+vector<string> termlist;
 
-int hookTerm()
+const string RST = "\033[1;0m";
+const string RED_BACK = "\033[1;31m";
+
+void hookTerm()
 {
     // Access the available tty, pts, and vty stdout.
     // Update active teminal list and directory listing.
+    termlist.clear();
+    termlist.push_back("/dev/tty1");
+    termlist.push_back("/dev/tty2");
+    termlist.push_back("/dev/tty3");
+    termlist.push_back("/dev/tty4");
+    termlist.push_back("/dev/tty5");
+    termlist.push_back("/dev/tty6");
     for (const auto & entry : filesystem::directory_iterator("/dev/pts/"))
     {
         if(entry.path() == (filesystem::path)"/dev/pts/ptmx")
@@ -30,19 +42,41 @@ int hookTerm()
             cout << "Debug ptmx is out." << endl;
             continue;
         }
-        termlist.push_back(entry.path());
+        termlist.push_back(entry.path().u8string());
     }
-    return 1;
-}
-
-int printTerms()
-{
-    return 1;
 }
 
 int isRoot()
 {
     return 1;
+}
+
+void displayloop()
+{
+    // While running update terminal list and display the brainwasher logo periodically to each.
+    int rows = 32;
+    int columns = 90;
+    ofstream rw;
+    while(running)
+    {
+	    hookTerm();
+        for(string pts : termlist){
+            ofstream out(pts);
+            string s(rows, '#');
+            for(int i = 0; i < (columns/2); i--)
+            {
+                out << s;
+            }
+            out << "BRAIN WASHER" << endl;
+            for(int i = 0; i < (columns/2)-1; i--)
+            {
+                out << s;
+            }
+            out.close();
+        }
+        this_thread::sleep_for(1000ms);
+        running --;
+    }
 }
 
 int main(int argc, char *argv[])
@@ -66,13 +100,12 @@ int main(int argc, char *argv[])
             cout << "      " << "\r";
             delay--;
         }
-        
-	    hookTerm();
         cout << "Active Terminals: " << endl;
-        for(filesystem::path p : termlist)
+        for(string p : termlist)
         {
-            cout << p.u8string() << endl;
+            cout << p << endl;
         }
+        displayloop();
     }else
     {
         cout << "Brainwashing failed - No root." << endl; 
