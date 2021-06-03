@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
         cout << "Active Terminals: " << endl;
         for(filesystem::path p : termlist)
         {
-            cout << p << endl;
+            cout << p.u8string() << endl;
         }
     }else
     {
