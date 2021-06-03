@@ -42,6 +42,7 @@ void hookTerm()
             cout << "Debug ptmx is out." << endl;
             continue;
         }
+        cout << entry.path().u8string() << endl;
         termlist.push_back(entry.path().u8string());
     }
 }
@@ -56,7 +57,6 @@ void displayloop()
     // While running update terminal list and display the brainwasher logo periodically to each.
     int rows = 32;
     int columns = 90;
-    ofstream rw;
     while(running)
     {
 	    hookTerm();
