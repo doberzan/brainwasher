@@ -18,7 +18,7 @@ using namespace std;
 
 int delay = 0;
 int mode = 0;
-int running = 10;
+int running = 1000;
 vector<string> termlist;
 
 const string RST = "\033[1;0m";
@@ -74,7 +74,7 @@ void displayloop()
             }
             out.close();
         }
-        this_thread::sleep_for(1000ms);
+        this_thread::sleep_for(10ms);
         running --;
     }
 }
