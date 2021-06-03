@@ -58,7 +58,7 @@ void displayloop()
     int rows = 32;
     int columns = 90;
     string bg = RED_BACK;
-    chrono::milliseconds refresh = 10ms;
+    chrono::milliseconds refresh = 200ms;
     while(running)
     {
         if(bg == RED_BACK)
