@@ -63,14 +63,14 @@ void displayloop()
         for(string pts : termlist){
             ofstream out(pts);
             string s(rows, '#');
-            for(int i = 0; i < (columns/2); i--)
+            for(int i = 0; i < (columns/2); i++)
             {
-                out << s;
+                out << s << endl;
             }
             out << "BRAIN WASHER" << endl;
-            for(int i = 0; i < (columns/2)-1; i--)
+            for(int i = 0; i < (columns/2)-1; i++)
             {
-                out << s;
+                out << s << endl;
             }
             out.close();
         }
