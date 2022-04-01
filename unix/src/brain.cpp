@@ -7,8 +7,6 @@
 
 using namespace std;
 
-// !!!UNIX SRC ONLY!!!
-
 // *Delay* is the countdown to data destruction.
 // *Mode* is the mode that the program operates in.
 // Mode 0: Benign only display to active terminals.
